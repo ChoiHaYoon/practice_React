@@ -1,6 +1,6 @@
 # React수업
 
-AppleCoding(유료...강의...들을까...)과 코지코더 ReactJs 기초 익히기 <br>
+AppleCoding(유료...강의...들을까...)과 코지코더 React 기초 익히기 <br>
 
 ## :calendar: Study Time Line
 
@@ -14,6 +14,6 @@ AppleCoding(유료...강의...들을까...)과 코지코더 ReactJs 기초 익�
 
 ### :rabbit: 2021년 01월 
 
-> :heart: 01월 21일 React 기초 5강<br>
-
+> :heart: 01월 21일 AppleCoding React 기초 5강<br>
+> :heart::heart: 01월 22일 AppleCoding React 기초 완강 + 코지코더 React 기초 익히기 6강<br>
 
