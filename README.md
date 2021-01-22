@@ -1,4 +1,7 @@
-# AppleCoding React수업
+# React수업
+
+AppleCoding(유료...강의...들을까...)과 코지코더 ReactJs 기초 익히기 <br>
+
 ## :calendar: Study Time Line
 
 ### :laughing: Status 
