@@ -60,21 +60,29 @@ import './App.css';
   className에도 className = { posts }를 하면 클래스명이 강남 고기 맛집으로 된다
   이처럼 어디에서나 사용을 가능하다
 
+  return ( 
+    <div></div>
+    <div></div>
+    <div></div>
+  ) << 리액트에서는 태그를 연속적으로 넣을 수 없다. 전체를 div로 감싼 뒤 그안에서 해결을 해야한다
+
 */
 
-function App() {
+function App() { // 얘도 컴포넌트 이다
   // 데이터를 저장하는 법 두가지
   // 1. 변수에 저장
   let posts = '서버에서 가져온 값';
   let postStyle = { color: 'blue', fontSize : '30px' };
-  // 2. state사용(변수 대신 쓰는 데이터 저장공간 >> useState()를 이용해서 만들어야한다(꼭 useState()로 사용해야한다))
-  // 1) 맨 위에 import React, { use State } from 'react'; 
-  //    >> 리액트에 있는 내장함수하나를 사용하겠습니다 라는 뜻
-  // 2) useState라는 함수를 사용할 수 있다 / 괄호안에는 object, array모두다 사용이 가능하다
-  // let [글제목, 글제목변경] = useState('블로그 글제목');
+  /*
+    2. state사용(변수 대신 쓰는 데이터 저장공간 >> useState()를 이용해서 만들어야한다(꼭 useState()로 사용해야한다))
+      1) 맨 위에 import React, { use State } from 'react'; 
+        >> 리액트에 있는 내장함수하나를 사용하겠습니다 라는 뜻
+      2) useState라는 함수를 사용할 수 있다 / 괄호안에는 object, array모두다 사용이 가능하다
+      let [글제목, 글제목변경] = useState('블로그 글제목');
+  */
   let [contentTitle, titleChange] = useState(['오늘의 사과', '호오호오옹오', '여자코트 추천']);
-  // 3) useState는 실행하면 결과값은 array가 나온다. >> [a, b]
-  // >> 결과배열의 a에는 블로그 글제목이 들어간다(데이터) / b에는 앞에서 지정한 데이터를 수정하기 위한(정정하기 위한) 함수가 들어간다
+  //  3) useState는 실행하면 결과값은 array가 나온다. >> [a, b]
+  //  >> 결과배열의 a에는 블로그 글제목이 들어간다(데이터) / b에는 앞에서 지정한 데이터를 수정하기 위한(정정하기 위한) 함수가 들어간다
 
 
   /* 
@@ -109,20 +117,20 @@ function App() {
 
 
   /* 숙제1 : 버튼을 누르면 첫번째 글 제목이 바뀌게 하기 */
-  let changeTitle = () => {
-    // 이것은 리액트의 대원칙인 immutable data >> 리액트는 직접적으로 값이 수정이 되면 안된다라는 원칙
-    // titleChange(['여자코트추천', '글제목2', '글제목3']); 
-    // << 변경함수 쓸 때 만약 원본값이 배열이면 똑같이 배열로 전체수정해줘야한다
+  // let changeTitle = () => {
+  //   // 이것은 리액트의 대원칙인 immutable data >> 리액트는 직접적으로 값이 수정이 되면 안된다라는 원칙
+  //   // titleChange(['여자코트추천', '글제목2', '글제목3']); 
+  //   // << 변경함수 쓸 때 만약 원본값이 배열이면 똑같이 배열로 전체수정해줘야한다
 
-    // 위에꺼 말고 다른방법도있음 >> 수정된 데이터를 만들어주면됨(원본state수정x) / 복사본을 만든다고 생각 / 특히 state가 array나 object일 경우
-    // let newArray = contentTitle; << 얕은복사(contentTitle의 값을 공유하는것(call by reference)) >>reference data type의 특징
-    let newArray = [...contentTitle]; //깊은복사(값공유를 하지않고 새로운 복사를 하는것(call by value)) >> ...이 기존의 중괄호를 없애주고 여기서 다시 중괄호를 입력해주는 것이다
-    // newArray[0] = '여자코트추천';
-    // titleChange(newArray);
-    // 패턴 무조건 외우기
-    newArray.sort();
-    titleChange(newArray);
-  }
+  //   // 위에꺼 말고 다른방법도있음 >> 수정된 데이터를 만들어주면됨(원본state수정x) / 복사본을 만든다고 생각 / 특히 state가 array나 object일 경우
+  //   // let newArray = contentTitle; << 얕은복사(contentTitle의 값을 공유하는것(call by reference)) >>reference data type의 특징
+  //   let newArray = [...contentTitle]; //깊은복사(값공유를 하지않고 새로운 복사를 하는것(call by value)) >> ...이 기존의 중괄호를 없애주고 여기서 다시 중괄호를 입력해주는 것이다
+  //   // newArray[0] = '여자코트추천';
+  //   // titleChange(newArray);
+  //   // 패턴 무조건 외우기
+  //   newArray.sort();
+  //   titleChange(newArray);
+  // }
 
   return (
     <div className="App">
@@ -141,7 +149,7 @@ function App() {
         <h4>{ posts }</h4>  변수명만 넣어주면 document.getElementById가 필요 없어진다 / 함수를 넣어도 된다
         <h4>{  test1() }</h4> 
       */}
-      <button onClick={changeTitle}>버튼</button>
+      {/* <button onClick={changeTitle}>버튼</button> */}
       <div className="list">
         <h3>{ contentTitle[0] } <span onClick={appleGood}>🍎</span> { good } </h3> 
         {/* 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]*/}
@@ -159,8 +167,64 @@ function App() {
         <p>1월 21일 발행</p>
         <hr/>
       </div>
+
+      {/* 
+        html태그를 간편하게 한단어로 줄여서 쓸 수 있는 방법 : component문법 (HTML덩어리)
+        태그 이름은 내가 막 지어도 된다(나만의 단어로 만들면 된다.)
+
+        ex) html에서는 이렇게 모달창을 띄우려고 하면 리액트에서 컴포넌트문법사용해서 만들면 밑에처럼 만들면 된다
+        <div className="modal">
+          <h2>제목</h2>
+          <p>날짜</p>
+          <p>상세내용</p>
+        </div>
+        
+        바로밑에는 만든 컴포넌트를 태그로 선언하는 방법
+        <Modal></Modal>이거나 <Modal/>로 해두됨
+
+        리액트를 쓰는 가장 중요한 이유!!!
+        컴포넌트를 이용해서 html을 축약해서 쓸 수 있기 때문에!
+        장점 : 컴포넌트안에 컴포넌트를 만들 수 있다(관리가 편해짐)
+        단점 : 
+        1. 컴포넌트를 많이 만들면 많이 만들수록 관리가 힘들어진다(적당히 만들자 >> 꼭 필요한것만)
+        2. state를 쓸 때 복잡해짐(데이터를 전달해줘야한다 >> props문법을 이용해야한다)
+
+        컴포넌트를 만드는 기준! (사실 마음에 드는 부분을 잘라서 컴포넌트를 만들어도 전혀 상관없음)
+        1. 반복적으로 출현하는 html덩어리들!
+        2. 자주 변경되는 html ui들(재렌더링이 많이 일어나는 ui를 따로 빼놓으면 그것만 재렌더링이 되기때문에 성능이 좋아짐)
+        3. 다른페이지 만들때도 컴포넌트로 만든다
+      */}
+      <Modal/>
+
+
     </div>
   );
 }
+
+/* 
+  위에서 이야기한 컴포넌트 만들기
+  function에 html을 담아서 치환을 하는 과정이다
+  원하는 태그이름 == 함수이름 / 즉, 함수이름이 곧 태그명이 되는것
+  그리고 위에와 똑같이 return안에 원하는 Html을 코딩해주면 된다
+  
+  컴포넌트 만들때 유의 사항
+  1. 함수의 이름(컴포넌트의 이름)은 무조건 대문자로 시작
+  2. return 소괄호안에 html을 담으면 된다 
+    >> 위에서 이야기한것과 같이 return안에서 처음div는 여러개가 올 수 없다. 즉, 처음 div는 크게 하나만 존재해야하고 그안에서는 여러개가능
+    >> 여기서 div를 굳이 하나로 쓰기 싫다 여러개 쓰고싶다 하면 <> <div></div><div></div> </> 이렇게 가능하다
+      >> 이말은 <> 와 </>사이에 여러개를 넣을 수 있다
+  
+  위에서 만든 function App도 일종의 컴포넌트 이다
+*/
+function Modal(){
+  return (
+    <div className="modal">
+      <h2>제목</h2>
+      <p>날짜</p>
+      <p>상세내용</p>
+    </div>
+  )
+}
+
 
 export default App;
