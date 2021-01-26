@@ -6,17 +6,22 @@ function App() {
   const [movieTitle, setTitle] = useState('');
   const [movieYear, setYear] = useState('');
   const [movies, setMovies] = useState([
-    {title : '리틀 포레스트', year: 2018},
-    {title : '소울', year: 2021},
-    {title : '어벤져서', year: 2012},
-    {title : '신세계', year: 2017}
+
   ]);
 
-  const renderMovies = movies.map((movie) => {
+  const removeMovie = (id) => {
+    // 아이디값으로 어떤값을 지울것인지 확인하기 위해서 id를 받아옴
+    // 자바스크립트의 filter를 이용해서 삭제하기(콜백함수 이용)
+    setMovies(movies.filter((movie)=>{
+        return movie.id !== id;
+    }));
+  }
+
+  const renderMovies = movies.length ? movies.map((movie) => {
     return (
-      <Movie movie={movie} key={movie.title}/>
+      <Movie movie={movie} key={movie.id} removeMovie={removeMovie}/>
     );
-  });
+  }) : '추가된 영화가 없습니다.';
 
   const addMovie = (movie) => {
     // event.preventDefault(); // submit될때 refresh가 안되도록
