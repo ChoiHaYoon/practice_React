@@ -9,6 +9,9 @@
       name="description"
       content="Web site created using create-react-app"
     />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
+    crossorigin="anonymous">
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -37,6 +40,33 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
+
+      리액트 구동방식(리액트 라우터 사용)
+
+      리액트는 싱글페이지어플리케이션이다(SPA)
+      리액트 처음 시작하게되면 index.html을 먼저 불러오게 된다
+      그리고 id=root를 가진 div안에 index.js를 이용해서 app.js(컴포넌트)를 불러와서 넣어준다
+      그렇게 해서 app컴포넌트 안에 보면 우리가 return안에 넣은 html이 작동하게 된다
+      (이 컴포넌트 안에서 모든것이 이뤄진다 보면 된다.)
+      기존의 방식은 컨텐츠를 누르면 새로 리로딩이 되는 방식 >> 서버에 요청해서 html을 전체 받아오는 방식이다
+      하지만 리액트 라우터를 쓰게 되면 컨텐츠를 누르면 리로딩이 되는것이 아니다 (빠르게 이동가능)
+
+      웹브라우저에 요청이 오면 서버로 요청이 들어간다 서버는 html파일과 자바스크립트파일을 보내준다(웹브라우저로)
+      js파일안에는 우리가 작성한 컴포넌트 파일을 전부 자바스크립트로 변환해서 js파일 한개 안에 모든것이 들어간다 
+      << 지금 우리가 만든 componet폴더 안에있는 Js파일전부를 이야기하는것
+      그렇기 때문에 싱글페이지어플리케이션은 초기 로딩 속도가 느리다(모든 js를 다 받아와야 하기때문에) 
+      << 코드스플릿팅(js를 쪼개서 페이지 이동할 때마다 Js따로따로 불러오는 기술) 사용을 하면 느림을 최소화 할 수 있다
+
+      home페이지에서 메뉴의 movies를 누르게 되면 a태그를 리액트라우터로 사용했기때문에(Link태그) 리액트라우터가 중간에서 요청을 가로챈다
+      js안에 movies자바스크립코드를 이미 넣어두었기 때문에 그것을 이용해서 home부분을 빼주고 switch를 이용해서 맞는 path를 찾아서
+      컨텐츠를 보여준다(여기서는 MovieForm.js)
+      다른 것은 다 있지만 컨텐츠만 바뀌게 된다
+
+      우리가 리액트 라우터에서 링크를 연결하려면 Link태그를 사용한다
+      근데 NavLink라는게 하나 더 있다 >> 네비게이션용 링크를 사용할 때 사용하는 것
+      여기에 activeClassName이라는 속성이 있다 원하는 클래스명을 적어주면되는데
+      이 속성은 이 페이지가 active일때 이 클래스가 작동한다(태그에 클래스로 들어가게 된다)
+      >> 우리가 html에서 class="content active" >> 이런식으로 사용하던 것
     -->
   </body>
 </html>

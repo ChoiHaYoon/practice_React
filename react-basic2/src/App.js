@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import Movie from './component/Movie';
 import MovieForm from './component/MovieForm';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Navbar from './component/Navbar'
 
 function App() {
   const [movieTitle, setTitle] = useState('');
@@ -56,20 +62,65 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h1>Movie List</h1>
-      {/* MovieForm으로 따로 js를 만들어서 import를 해줌
-      <form onSubmit={onSubmit}>
-        <input type="text" value={movieTitle} placeholder="영화제목" onChange={(e) => setTitle(e.target.value)} /><br/>
-        <input type="text" value={movieYear} placeholder="개봉년도" onChange={(e) => setYear(e.target.value)} /><br/>
-        <button>영화추가</button>
-      </form> 
-      */}
-      {/* props로 onSubmit함수 보내기 >> addMovie라는 키값으로 */}
-      <MovieForm addMovie={addMovie}/>
-      {renderMovies}
-    </div>
+    /* 
+    리액트 라우터 사용방법 
+    1. div밖에(앱전체) Router태그로 감싸기
+    2. 클릭하는 부분을 link로 감싼다  >> link는 여기서 필요없고 Navbar.js에서 필요함
+    3. 보여 줄 컴포넌트 부분을 밑에서 Route태그로 감싸준다
+    */
+    <Router>
+      <div className="App">
+        <Navbar />
+        {/* 
+          Route태그는 Navbar.js에서 걸어준 Link를 눌렀을 때 보여주는 페이지를 이야기한다 >> Link하나에 Route하나 
+          Path속성 >> Navbar에서 Link태그의 to속성으로 지정해준 경로를 매칭시켜주는 것
+          여기서 기본경로인 path="/"를 하게되면 /이 들어간 모든 경로에 /만 있는 route가 다 나타나게 된다
+          >> 이거를 하나만 보여주게 하고싶으면 switch태그를 사용하게 된다
+          switch는 내려가면서 체크를 한다 >> 매치해서 맞는게 있으면 그페이지만 보여주게 멈춤
+          그렇기 때문에 순서가 중요하다
+          즉, 여기서 만약 맨위에 path="/"를 넣게되면 /이 들어간 모든것을 실행시키기때문에 맨처음에 /가 들어가면
+          처음껏만 보여주게된다 >> 모든 url에서는 /를 쓰기때문에 맨위에 들어가면 안됨!!
+
+          조금 더 정확하게 지정?하고싶다면 >> exact속성을 쓰게되면 ===의 역할을 하게된다(정확히 일치할때만!)
+        */}
+        <Switch>
+        <Route path="/movies">
+          <h1>Movie List</h1>
+          {/* MovieForm으로 따로 js를 만들어서 import를 해줌
+          <form onSubmit={onSubmit}>
+            <input type="text" value={movieTitle} placeholder="영화제목" onChange={(e) => setTitle(e.target.value)} /><br/>
+            <input type="text" value={movieYear} placeholder="개봉년도" onChange={(e) => setYear(e.target.value)} /><br/>
+            <button>영화추가</button>
+          </form> 
+          */}
+          {/* props로 onSubmit함수 보내기 >> addMovie라는 키값으로 */}
+          <MovieForm addMovie={addMovie}/>
+          {renderMovies}
+        </Route>
+        <Route path="/users">
+          <h1>Users</h1>
+        </Route>
+        <Route path="/" exact>
+          <h1>HOME</h1>
+        </Route>
+        </Switch>
+      </div>
+    </Router>
   );
+
+  // 리액트에서 여러페이지를 가지게 해주는 것 >> react router라는 패키지
+  // react Native >> 모바일앱을 만들 때 사용하는 것
+  /*
+      <BrowserRouter>
+      A <Router> that uses the HTML5 history API 
+      (pushState, replaceState and the popstate event) to keep 
+      your UI in sync with the URL.
+
+      api를 보면 다양한 api가 있는데 browserRouter는 html5부터 사용이 가능한 히스토리 api이다
+      이 히스토리 api를 사용하면 브라우저에 url를 쉽게 조작할 수 있다 >> 페이지 리로딩을 할 필요없이 페이지 조작이 가능
+
+  */
+  
 }
 
 export default App;
