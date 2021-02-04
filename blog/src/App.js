@@ -110,7 +110,7 @@ function App() { // 얘도 컴포넌트 이다
       state변경을 하려면 위에서 이야기했던 앞에서 지정한 데이터를 수정하기 위한(정정하기 위한) 함수를 사용해야한다
       >> 여기서는 goodChange >> 대체를 하는 함수
     */
-    goodChange(good + 1);
+    goodChange(good+1);
   }
   // 위에서 이야기했던 것처럼 state를 사용해야 값이 변경되었을 때 변경함수를 이용해서 재렌더링을 할수있다
   // 그렇기 때문에 state를 사용한다
@@ -132,6 +132,17 @@ function App() { // 얘도 컴포넌트 이다
   //   titleChange(newArray);
   // }
 
+  // 리액트에서는 ui를 만들때도 state데이터를 이용한다
+  // 제목클릭 시 모달창 띄우게 하기
+  let[modal, changeModal] = useState(false); // on off스위치 처럼 사용
+  let clickTitle = () => {
+    if(modal === true){
+      changeModal(false);
+    } else if(modal === false) {
+      changeModal(true)
+    }
+  }
+
   return (
     <div className="App">
       <div className="black-nav">
@@ -150,23 +161,48 @@ function App() { // 얘도 컴포넌트 이다
         <h4>{  test1() }</h4> 
       */}
       {/* <button onClick={changeTitle}>버튼</button> */}
-      <div className="list">
-        <h3>{ contentTitle[0] } <span onClick={appleGood}>🍎</span> { good } </h3> 
-        {/* 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]*/}
-        {/* 리액트에서 이벤트 넣기 >> onClick = {클릭될 때 실행할 함수명 or 직접적으로 함수 >> 괄호는 빼줘야한다 함수명만} */}
+      {/* 
+        반복문을 사용하기 전
+        <div className="list">
+        <h3 onClick={clickTitle}>{ contentTitle[0] } <span onClick={appleGood}>🍎</span> { good } </h3> 
+        넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
+        리액트에서 이벤트 넣기 >> onClick = {클릭될 때 실행할 함수명 or 직접적으로 함수 >> 괄호는 빼줘야한다 함수명만}
         <p>1월 21일 발행</p>
         <hr/>
       </div>
       <div className="list">
-        <h3>{ contentTitle[1] }</h3> {/* 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]*/}
+        <h3 onClick={clickTitle}>{ contentTitle[1] }</h3> 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
         <p>1월 21일 발행</p>
         <hr/>
       </div>
       <div className="list">
-        <h3>{ contentTitle[2] }</h3> {/* 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]*/}
+        <h3 onClick={clickTitle}>{ contentTitle[2] }</h3> 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
         <p>1월 21일 발행</p>
         <hr/>
       </div>
+      */}
+
+      {/* 
+        반복문을 사용하려면 for문사용 못함 >> 밑에서 했던것과 마찬가지로 Jsx는 중괄호 안에는 if나 for를 사용못한다
+        그럴때 사용하는게 for >> map을 사용해야한다
+        map함수는 array에 붙일 수 있는 함수
+        map은 array안에 모든 데이터에 똑같은 작업을 시켜주고 싶을 때 사용하는게 .Map(콜백함수)함수
+        여기서는 반복할데이터.map()을 사용하면 for와 같게 된다
+      */}
+      {
+        contentTitle.map(function(a, index){
+          // a : array안에있던 하나하나의 데이터
+          // index : array안에 갯수만큼 돌리는 index
+          return (
+            <div className="list" key={index}>
+              {/* <h3 onClick={clickTitle}>{ contentTitle[index] }</h3>  >> 이렇게 사용해도되고 밑에꺼로 사용해도 된다*/}
+              <h3><span onClick={clickTitle}>{a}</span> <span onClick={appleGood}>🍎</span> { good } </h3> 
+              <p>1월 21일 발행</p>
+              <hr/>
+            </div>
+          )
+        })
+      }
 
       {/* 
         html태그를 간편하게 한단어로 줄여서 쓸 수 있는 방법 : component문법 (HTML덩어리)
@@ -194,8 +230,26 @@ function App() { // 얘도 컴포넌트 이다
         2. 자주 변경되는 html ui들(재렌더링이 많이 일어나는 ui를 따로 빼놓으면 그것만 재렌더링이 되기때문에 성능이 좋아짐)
         3. 다른페이지 만들때도 컴포넌트로 만든다
       */}
-      <Modal/>
 
+      {/* h3을 클릭하면 Modal이 뜨게 하려면 여기서는 바로 If문 사용해서 사용이 가능하다 >> 중간에 넣을 수 있다
+        jsx에서 자바스크립트문을 사용하고 싶을때는 중괄호를 열고 사용해야한다
+        >> 즉, jsx중간에 변수를 넣고싶으면 {변수명} 이런식으로 쓰듯이 사용해야한다
+        근데 중괄호안에서는if문을 사용을 할 수 없다 으잉?!
+        여기서는 삼항연산자를 사용해야한다
+        조건식? true일 때 결과값 : false일 때 결과값
+      */}
+
+      {/* {
+        modal === true ? <Modal/> : null
+        // 아무것도 남기고싶지 않을때는 null을 이용해서 작성해야한다
+      } */}
+
+      {/* 숙제 : 버튼클릭시 모달창 만들어졌다가 사라짐 */}
+      <button onClick={clickTitle}>버튼</button>
+      
+      {
+        modal === true ? <Modal/> : null
+      }
 
     </div>
   );
