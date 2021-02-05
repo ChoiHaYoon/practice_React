@@ -3,7 +3,7 @@
 AppleCoding(유료강의 시작)과 코지코더 React 기초 익히기 <br>
 
 ## :file_folder: Folder Name
-> blog >> 블로그만들기<br>
+> react_AppleCoding >> appleCoding React 기초<br>
 > react_basic >> 코지코더 React 기초 익히기 1강 ~ 11강<br>
 > react_basic2 >> 코지코더 React 기초 익히기 12강 ~ 22강<br>
 
