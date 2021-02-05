@@ -68,230 +68,404 @@ import './App.css';
 
 */
 
-function App() { // 얘도 컴포넌트 이다
-  // 데이터를 저장하는 법 두가지
-  // 1. 변수에 저장
-  let posts = '서버에서 가져온 값';
-  let postStyle = { color: 'blue', fontSize : '30px' };
-  /*
-    2. state사용(변수 대신 쓰는 데이터 저장공간 >> useState()를 이용해서 만들어야한다(꼭 useState()로 사용해야한다))
-      1) 맨 위에 import React, { use State } from 'react'; 
-        >> 리액트에 있는 내장함수하나를 사용하겠습니다 라는 뜻
-      2) useState라는 함수를 사용할 수 있다 / 괄호안에는 object, array모두다 사용이 가능하다
-      let [글제목, 글제목변경] = useState('블로그 글제목');
-  */
-  let [contentTitle, titleChange] = useState(['오늘의 사과', '호오호오옹오', '여자코트 추천']);
-  //  3) useState는 실행하면 결과값은 array가 나온다. >> [a, b]
-  //  >> 결과배열의 a에는 블로그 글제목이 들어간다(데이터) / b에는 앞에서 지정한 데이터를 수정하기 위한(정정하기 위한) 함수가 들어간다
+// function App() { // 얘도 컴포넌트 이다
+//   /* 
+//     데이터를 저장하는 법 두가지
+//     1. 변수에 저장
+//       let posts = '서버에서 가져온 값';
+//       let postStyle = { color: 'blue', fontSize : '30px' };
+  
+//     2. state사용(변수 대신 쓰는 데이터 저장공간 >> useState()를 이용해서 만들어야한다(꼭 useState()로 사용해야한다))
+//       1) 맨 위에 import React, { use State } from 'react'; 
+//         >> 리액트에 있는 내장함수하나를 사용하겠습니다 라는 뜻
+//       2) useState라는 함수를 사용할 수 있다 / 괄호안에는 object, array모두다 사용이 가능하다
+//       let [글제목, 글제목변경] = useState('블로그 글제목');
+//   */
+//   let [contentTitle, titleChange] = useState(['오늘의 사과', '호오호오옹오', '여자코트 추천']);
+//   //  3) useState는 실행하면 결과값은 array가 나온다. >> [a, b]
+//   //  >> 결과배열의 a에는 블로그 글제목이 들어간다(데이터) / b에는 앞에서 지정한 데이터를 수정하기 위한(정정하기 위한) 함수가 들어간다
+
+//   /* 
+//     state을 왜 사용하나?(state의 장점)
+//     리액트를 웹앱처럼 동작하게 만들고싶어서 사용한다!
+//     state는 값이 변경될 때 html이 자동으로 재렌더링이 된다 << 제일 중요한 포인트
+//     그냥 변수로 만들면 값이 변경되면 자동 재렌더링이 안된다(새고를 안하면 원하는 값이 안나옴)
+//     하지만 state는 새고를 안해도 값이 자동 재렌더링되기 때문에 자주 바뀌거나 중요한 데이터는 state로 사용하는것이 좋다
+
+//     ! 여기서, 자바스크립트 최신문법하나!(ES6의 destructuring문법)
+//     변수명으로 배열을 집어넣으면 어떻게 되나?
+//     ex)
+//     let [a, b] >> a와 b라는 변수를 만들겠습니다 여기안에는 useState를 실행했을 때 나오는 데이터 [a, b]를 각각 넣겠습니다
+//     a변수에는 데이터 a를 / b변수에는 데이터 b를
+//     let [one, two] = [10, 100];
+//     one에는 10
+//     two에는 100이 들어간다
+//     즉 이거는 array나 object에 있던 자료를 변수에 쉽게 담고싶을때 사용한다
+//   */
+
+//   // 1. 사과 누르면 1씩 증가하기
+//   let [good, goodChange] = useState(0);
+//   let appleGood = () => {
+//     /*
+//       state는 그냥변경이 안됨
+//       state변경을 하려면 위에서 이야기했던 앞에서 지정한 데이터를 수정하기 위한(정정하기 위한) 함수를 사용해야한다
+//       >> 여기서는 goodChange >> 대체를 하는 함수
+//     */
+//     goodChange(good+1);
+//     /*
+//       위에서 이야기했던 것처럼 state를 사용해야 값이 변경되었을 때 변경함수를 이용해서 재렌더링을 할수있다
+//       그렇기 때문에 state를 사용한다 
+//     */
+//   }
 
 
-  /* 
-    state을 왜 사용하나?(state의 장점)
-    리액트를 웹앱처럼 동작하게 만들고싶어서 사용한다!
-    state는 값이 변경될 때 html이 자동으로 재렌더링이 된다 << 제일 중요한 포인트
-    그냥 변수로 만들면 값이 변경되면 자동 재렌더링이 안된다(새고를 안하면 원하는 값이 안나옴)
-    하지만 state는 새고를 안해도 값이 자동 재렌더링되기 때문에 자주 바뀌거나 중요한 데이터는 state로 사용하는것이 좋다
+//   /* 숙제1 : 버튼을 누르면 첫번째 글 제목이 바뀌게 하기 */
+//   /*
+//     let changeTitle = () => {
+//       // 이것은 리액트의 대원칙인 immutable data >> 리액트는 직접적으로 값이 수정이 되면 안된다라는 원칙
+//       // titleChange(['여자코트추천', '글제목2', '글제목3']); 
+//       // << 변경함수 쓸 때 만약 원본값이 배열이면 똑같이 배열로 전체수정해줘야한다
 
-    ! 여기서, 자바스크립트 최신문법하나!(ES6의 destructuring문법)
-    변수명으로 배열을 집어넣으면 어떻게 되나?
-    ex)
-    let [a, b] >> a와 b라는 변수를 만들겠습니다 여기안에는 useState를 실행했을 때 나오는 데이터 [a, b]를 각각 넣겠습니다
-    a변수에는 데이터 a를 / b변수에는 데이터 b를
-    let [one, two] = [10, 100];
-    one에는 10
-    two에는 100이 들어간다
-    즉 이거는 array나 object에 있던 자료를 변수에 쉽게 담고싶을때 사용한다
-  */
-  // 사과 누르면 1씩 증가하기
-  let [good, goodChange] = useState(0);
-  let appleGood = () => {
-    /*
-      state는 그냥변경이 안됨
-      state변경을 하려면 위에서 이야기했던 앞에서 지정한 데이터를 수정하기 위한(정정하기 위한) 함수를 사용해야한다
-      >> 여기서는 goodChange >> 대체를 하는 함수
-    */
-    goodChange(good+1);
-  }
-  // 위에서 이야기했던 것처럼 state를 사용해야 값이 변경되었을 때 변경함수를 이용해서 재렌더링을 할수있다
-  // 그렇기 때문에 state를 사용한다
+//       // 위에꺼 말고 다른방법도있음 >> 수정된 데이터를 만들어주면됨(원본state수정x) / 복사본을 만든다고 생각 / 특히 state가 array나 object일 경우
+//       // let newArray = contentTitle; << 얕은복사(contentTitle의 값을 공유하는것(call by reference)) >>reference data type의 특징
+//       let newArray = [...contentTitle]; //깊은복사(값공유를 하지않고 새로운 복사를 하는것(call by value)) >> ...이 기존의 중괄호를 없애주고 여기서 다시 중괄호를 입력해주는 것이다
+//       // newArray[0] = '여자코트추천';
+//       // titleChange(newArray);
+//       // 패턴 무조건 외우기
+//       newArray.sort();
+//       titleChange(newArray);
+//     }
+//   */
+
+//   // 2. 리액트에서는 ui를 만들때도 state데이터를 이용한다
+//   // 제목클릭 시 모달창 띄우게 하기
+//   let[modal, changeModal] = useState(false); // on off스위치 처럼 사용
+//   let clickTitle = () => {
+//     if(modal === true){
+//       changeModal(false);
+//     } else if(modal === false) {
+//       changeModal(true)
+//     }
+//   }
+
+//   // 3. ui를 각각 다르게 만들기
+//   let [titleIndex, changeIndex] = useState(0);
+
+//   // 4. input값 저장하기
+//   let [saveInput, changeInput] = useState('');
+//   let inputTitle = (e) => {
+//     changeInput(e.target.value);
+//   }
+//   // 4-1. 받아온 input값을 배열에 저장해서 표시하기
+//   let newTitle = [...contentTitle];
+//   let pushTitle = () => {
+//     newTitle.unshift(saveInput);
+//     titleChange(newTitle);
+//   }
+
+//   return (
+//     <div className="App">
+//       <div className="black-nav">
+//         {/* 
+//           <div style="font-size: 16px">개발 Blog</div> << 이거는 안됨
+//           <div style={{ color: 'blue', fontSize : '30px' }}>개발 Blog</div> 
+//           이런식으로 객체화 시켜서 넣어줘야한다 >> -는 자바스크립트에서는 뺄셈이기때문에 카멜작명관습에따라 속성명을 바꿔줘야한다
+//           두단어가 합쳐질때는 두번째 맨처음문자가 대문자
+//           style={ postStyle } << 스타일 넣을때도 변수에 넣어서 변수명으로 해줘도 된다
+//         */}
+//         <div>개발 Blog</div>
+//       </div>
+//       {/* 
+//         <img src={logo}>
+//         <h4>{ posts }</h4>  변수명만 넣어주면 document.getElementById가 필요 없어진다 / 함수를 넣어도 된다
+//         <h4>{  test1() }</h4> 
+//         <button onClick={changeTitle}>버튼</button>
+//       */}
+//       {/* 
+//         반복문을 사용하기 전
+//         <div className="list">
+//           <h3 onClick={clickTitle}>{ contentTitle[0] } <span onClick={appleGood}>🍎</span> { good } </h3> 
+//           넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
+//           리액트에서 이벤트 넣기 >> onClick = {클릭될 때 실행할 함수명 or 직접적으로 함수 >> 괄호는 빼줘야한다 함수명만}
+//           <p>1월 21일 발행</p>
+//           <hr/>
+//         </div>
+//         <div className="list">
+//           <h3 onClick={clickTitle}>{ contentTitle[1] }</h3> 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
+//           <p>1월 21일 발행</p>
+//           <hr/>
+//         </div>
+//         <div className="list">
+//           <h3 onClick={clickTitle}>{ contentTitle[2] }</h3> 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
+//           <p>1월 21일 발행</p>
+//           <hr/>
+//         </div> 
+
+//         반복문을 사용하려면 for문사용 못함 >> 밑에서 했던것과 마찬가지로 Jsx는 중괄호 안에는 if나 for를 사용못한다
+//         그럴때 사용하는게 for >> map을 사용해야한다
+//         map함수는 array에 붙일 수 있는 함수
+//         map은 array안에 모든 데이터에 똑같은 작업을 시켜주고 싶을 때 사용하는게 .Map(콜백함수)함수
+//         여기서는 반복할데이터.map()을 사용하면 for와 같게 된다
+//       */}
+//       {
+//         contentTitle.map(function(a, index){
+//           // a : array안에있던 하나하나의 데이터
+//           // index : array안에 갯수만큼 돌리는 index(반복문이 돌때마다 0,1,2되는 것)
+//           return (
+//             <div className="list" key={index}>
+//               {/* <h3 onClick={clickTitle}>{ contentTitle[index] }</h3>  >> 이렇게 사용해도되고 밑에꺼로 사용해도 된다*/}
+//               <h3 onClick={ () => {changeIndex(index);} }><span onClick={clickTitle}>{a}</span> <span onClick={appleGood}>🍎</span> { good } </h3> 
+//               <p>1월 21일 발행</p>
+//               <hr/>
+//             </div>
+//           )
+//         })
+//       }
+
+//       {/* 
+//         html태그를 간편하게 한단어로 줄여서 쓸 수 있는 방법 : component문법 (HTML덩어리)
+//         태그 이름은 내가 막 지어도 된다(나만의 단어로 만들면 된다.)
+
+//         ex) html에서는 이렇게 모달창을 띄우려고 하면 리액트에서 컴포넌트문법사용해서 만들면 밑에처럼 만들면 된다
+//         <div className="modal">
+//           <h2>제목</h2>
+//           <p>날짜</p>
+//           <p>상세내용</p>
+//         </div>
+        
+//         바로밑에는 만든 컴포넌트를 태그로 선언하는 방법
+//         <Modal></Modal>이거나 <Modal/>로 해두됨
+
+//         리액트를 쓰는 가장 중요한 이유!!!
+//         컴포넌트를 이용해서 html을 축약해서 쓸 수 있기 때문에!
+//         장점 : 컴포넌트안에 컴포넌트를 만들 수 있다(관리가 편해짐)
+//         단점 : 
+//         1. 컴포넌트를 많이 만들면 많이 만들수록 관리가 힘들어진다(적당히 만들자 >> 꼭 필요한것만)
+//         2. state를 쓸 때 복잡해짐(데이터를 전달해줘야한다 >> props문법을 이용해야한다)
+
+//         컴포넌트를 만드는 기준! (사실 마음에 드는 부분을 잘라서 컴포넌트를 만들어도 전혀 상관없음)
+//         1. 반복적으로 출현하는 html덩어리들!
+//         2. 자주 변경되는 html ui들(재렌더링이 많이 일어나는 ui를 따로 빼놓으면 그것만 재렌더링이 되기때문에 성능이 좋아짐)
+//         3. 다른페이지 만들때도 컴포넌트로 만든다
+        
+        
+//         h3을 클릭하면 Modal이 뜨게 하려면 여기서는 바로 If문 사용해서 사용이 가능하다 >> 중간에 넣을 수 있다
+//         jsx에서 자바스크립트문을 사용하고 싶을때는 중괄호를 열고 사용해야한다
+//         >> 즉, jsx중간에 변수를 넣고싶으면 {변수명} 이런식으로 쓰듯이 사용해야한다
+//         근데 중괄호안에서는if문을 사용을 할 수 없다 으잉?!
+//         여기서는 삼항연산자를 사용해야한다
+//         조건식? true일 때 결과값 : false일 때 결과값
+//       */}
+//       {/* {
+//         modal === true ? <Modal/> : null
+//         // 아무것도 남기고싶지 않을때는 null을 이용해서 작성해야한다
+//       } */}
+
+//       {/* 
+//         버튼을 누르면 각각 다른 모달창이 뜨도록
+//         <button onClick={ ()=> {changeIndex(0); changeModal(true)} }>버튼1</button>
+//         <button onClick={ ()=> {changeIndex(1); changeModal(true)} }>버튼2</button>
+//         <button onClick={ ()=> {changeIndex(2); changeModal(true)} }>버튼3</button> 
+//       */}
+
+//       {/* 
+//         react에서 input을 사용할때는 <input></input> or <input />으로 사용해줘야한다 
+//         input에 입력한 값을 저장하기 >> state이용해서 저장하는게 좋다
+//         무언가가 입력될 때 함수 실행하는 속성 >> onChange / onInput
+//         input에 입력되는 값을 가져오고싶을때는?
+//         javascript랑 비슷하게 e.target.value를 써주면된다 + 파라미터로 e를 넣어줘야한다
+//         함수표현식이나 함수로 지정해 준 경우 input은 값이 바로 넘어가기때문에 매개변수로만 지정해주면된다
+//         <input onChange={inputTitle}/>
+//       */}
+
+//       {/* 블로그 발행 기능(영구저장은 불가 / 서버+DB가 없기때문에) */}
+//       <div className="publish">
+//         <input onChange={inputTitle}/>
+//         <button onClick={pushTitle}>저장</button>
+//       </div>
+
+//       {/* 숙제 : 버튼클릭시 모달창 만들어졌다가 사라짐 */}
+//       <button onClick={clickTitle}>열고닫기</button>
+
+//       <Profile />
+      
+//       {
+//         // porps로 자식에게 state를 전해주는법 >> key이름={전송할state}
+//         modal === true ? <Modal contentTitle={contentTitle} titleIndex={titleIndex} /> : null
+//       }
+
+//     </div>
+//   );
+// }
+
+// /* 
+//   위에서 이야기한 컴포넌트 만들기
+//   function에 html을 담아서 치환을 하는 과정이다
+//   원하는 태그이름 == 함수이름 / 즉, 함수이름이 곧 태그명이 되는것
+//   그리고 위에와 똑같이 return안에 원하는 Html을 코딩해주면 된다
+  
+//   컴포넌트 만들때 유의 사항
+//   1. 함수의 이름(컴포넌트의 이름)은 무조건 대문자로 시작
+//   2. return 소괄호안에 html을 담으면 된다 
+//     >> 위에서 이야기한것과 같이 return안에서 처음div는 여러개가 올 수 없다. 즉, 처음 div는 크게 하나만 존재해야하고 그안에서는 여러개가능
+//     >> 여기서 div를 굳이 하나로 쓰기 싫다 여러개 쓰고싶다 하면 <> <div></div><div></div> </> 이렇게 가능하다
+//       >> 이말은 <> 와 </>사이에 여러개를 넣을 수 있다
+  
+//   위에서 만든 function App도 일종의 컴포넌트 이다
+// */
+
+// // 부모컨테이너에서 보낸 props값은 매개변수(data)로 한번에 묶여져서 넘어온다
+// function Modal(data){
+//   return (
+//     <div className="modal">
+//       {/* 받아온 매개변수(data) + .보낸값의 key이름 */}
+//       <h2>제목 : {data.contentTitle[data.titleIndex]}</h2>
+//       <p>날짜</p>
+//       <p>상세내용</p>
+//     </div>
+//   )
+// }
+
+// // 리액트 문법 예전ver >> componet기본 문법
+// // React.Component를 상속받아서 class를 제작해줘야 했었음.
+// // 부모컴포넌트에서 자식컴포넌트 받아오는 문법그대로 사용하면됨 >> <Profile />
+// class Profile extends React.Component{
+//   constructor(){
+//     // constructor : class의 변수/초기값을 저장할 때 사용
+//     // state는 여기서 지정해주면 됨
+//     super();
+//     this.state = { name : 'Kim', age : 30 }
+//   }
+
+//   // 클래스 내에서 함수를 만드는 방법
+//   /* changeName(){
+//     this.setState( {name: 'park'} );
+//   } */
+//   changeName = () => {
+//     this.setState({name : '찌송'});
+//   }
+
+//   render(){
+//     return (
+//       <div>
+//         <h3>프로필 입니다.</h3>
+//         {/* state를 불러올 때 약간 복잡하다 */}
+//         <p>저는 { this.state.name } 입니다</p>
+//         {/* state를 변경할 때는 this.setState함수를 사용한다 >> 완벽하게 바꾸는 것이 아닌 설정 값만 변경해주는 것(넣어 준 값만 변경해준다)*/}
+//         {/* <button onClick={() => { this.setState( {name: 'park'} ) }}>변경</button> */}
+//         {/* 
+//           만약 함수를 사용해서 사용을 하게 되면 this를 무조건 붙여줘야한다. >> this가 리액트에서는 예민하기 때문에 bind를 사용해서 this값을 설정해줘야한다 
+//           이것이 싫으면 함수를 만들 때 함수표현식으로 만들어주면된다
+//         */}
+//         <button onClick={/*this.changeName.bind(this)*/ this.changeName}>변경</button> 
+//       </div>
+//     )
+//   }
+// }
 
 
-  /* 숙제1 : 버튼을 누르면 첫번째 글 제목이 바뀌게 하기 */
-  // let changeTitle = () => {
-  //   // 이것은 리액트의 대원칙인 immutable data >> 리액트는 직접적으로 값이 수정이 되면 안된다라는 원칙
-  //   // titleChange(['여자코트추천', '글제목2', '글제목3']); 
-  //   // << 변경함수 쓸 때 만약 원본값이 배열이면 똑같이 배열로 전체수정해줘야한다
 
-  //   // 위에꺼 말고 다른방법도있음 >> 수정된 데이터를 만들어주면됨(원본state수정x) / 복사본을 만든다고 생각 / 특히 state가 array나 object일 경우
-  //   // let newArray = contentTitle; << 얕은복사(contentTitle의 값을 공유하는것(call by reference)) >>reference data type의 특징
-  //   let newArray = [...contentTitle]; //깊은복사(값공유를 하지않고 새로운 복사를 하는것(call by value)) >> ...이 기존의 중괄호를 없애주고 여기서 다시 중괄호를 입력해주는 것이다
-  //   // newArray[0] = '여자코트추천';
-  //   // titleChange(newArray);
-  //   // 패턴 무조건 외우기
-  //   newArray.sort();
-  //   titleChange(newArray);
-  // }
-
-  // 리액트에서는 ui를 만들때도 state데이터를 이용한다
-  // 제목클릭 시 모달창 띄우게 하기
-  let[modal, changeModal] = useState(false); // on off스위치 처럼 사용
+// 복습하기
+function App() { 
+  // 제목+날짜
+  let [titleContent, setTitle] = useState(['7726', '복숭아🍑', '토끼🐰']);
+  let [dateContent, setDate] = useState(['02월 28일', '02월 14일', '02월 01일'])
+  // 좋아요
+  let [good, setGood] = useState([0, 1, 5]);
+  // 모달표시 유무
+  let [modal, setModal] = useState(false);
+  // 모달창에 각 값표시
+  let [contentIndex, setIndex] = useState(0);
   let clickTitle = () => {
-    if(modal === true){
-      changeModal(false);
-    } else if(modal === false) {
-      changeModal(true)
+    if(modal === false){
+      setModal(true);
+    } else {
+      setModal(false);
     }
   }
+  // input값 받기
+  let [getTitle, setGetTitle] = useState('');
+  let inputTitle = (e) => {
+    let title = e.target.value;
+    setGetTitle(title);
+  }
+  
+  // 버튼 클릭하면 새로운 게시물 나타나게 하기
+  let newTitle = [...titleContent]; // 깊은 복사하기
+  let newDate = [...dateContent];
+  let newGood = [...good];
+  let addContent = () => {
+    let today = new Date(); // 표준시간
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    if(month < 10){
+      month = "0" + month;
+    }
+    if(day < 10){
+      day = "0" + day;
+    }
 
-  // ui를 각각 다르게 만들기
-  let [titleIndex, changeIndex] = useState(0);
+    newTitle.unshift(getTitle);
+    newDate.unshift(month + "월 " + day + "일");
+    newGood.unshift(0);
+
+    setTitle(newTitle);
+    setDate(newDate);
+    setGood(newGood);
+    setGetTitle('');
+  }
 
 
   return (
     <div className="App">
       <div className="black-nav">
-        {/* 
-          <div style="font-size: 16px">개발 Blog</div> << 이거는 안됨
-          <div style={{ color: 'blue', fontSize : '30px' }}>개발 Blog</div> 
-          이런식으로 객체화 시켜서 넣어줘야한다 >> -는 자바스크립트에서는 뺄셈이기때문에 카멜작명관습에따라 속성명을 바꿔줘야한다
-          두단어가 합쳐질때는 두번째 맨처음문자가 대문자
-          style={ postStyle } << 스타일 넣을때도 변수에 넣어서 변수명으로 해줘도 된다
-        */}
-        <div>개발 Blog</div>
+        <div style={{fontsize : "13px", color : "white"}}>하윤Blog</div>
       </div>
-      {/* 
-        <img src={logo}>
-        <h4>{ posts }</h4>  변수명만 넣어주면 document.getElementById가 필요 없어진다 / 함수를 넣어도 된다
-        <h4>{  test1() }</h4> 
-      */}
-      {/* <button onClick={changeTitle}>버튼</button> */}
-      {/* 
-        반복문을 사용하기 전
-        <div className="list">
-        <h3 onClick={clickTitle}>{ contentTitle[0] } <span onClick={appleGood}>🍎</span> { good } </h3> 
-        넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
-        리액트에서 이벤트 넣기 >> onClick = {클릭될 때 실행할 함수명 or 직접적으로 함수 >> 괄호는 빼줘야한다 함수명만}
-        <p>1월 21일 발행</p>
-        <hr/>
-      </div>
-      <div className="list">
-        <h3 onClick={clickTitle}>{ contentTitle[1] }</h3> 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
-        <p>1월 21일 발행</p>
-        <hr/>
-      </div>
-      <div className="list">
-        <h3 onClick={clickTitle}>{ contentTitle[2] }</h3> 넣은값을 배열로 넣었으면 원하는 값 가져올때는 변수명[index]
-        <p>1월 21일 발행</p>
-        <hr/>
-      </div>
-      */}
-
-      {/* 
-        반복문을 사용하려면 for문사용 못함 >> 밑에서 했던것과 마찬가지로 Jsx는 중괄호 안에는 if나 for를 사용못한다
-        그럴때 사용하는게 for >> map을 사용해야한다
-        map함수는 array에 붙일 수 있는 함수
-        map은 array안에 모든 데이터에 똑같은 작업을 시켜주고 싶을 때 사용하는게 .Map(콜백함수)함수
-        여기서는 반복할데이터.map()을 사용하면 for와 같게 된다
-      */}
       {
-        contentTitle.map(function(a, index){
-          // a : array안에있던 하나하나의 데이터
-          // index : array안에 갯수만큼 돌리는 index(반복문이 돌때마다 0,1,2되는 것)
+        titleContent.map(function(title, index){
           return (
             <div className="list" key={index}>
-              {/* <h3 onClick={clickTitle}>{ contentTitle[index] }</h3>  >> 이렇게 사용해도되고 밑에꺼로 사용해도 된다*/}
-              <h3 onClick={ () => {changeIndex(index);} }><span onClick={clickTitle}>{a}</span> <span onClick={appleGood}>🍎</span> { good } </h3> 
-              <p>1월 21일 발행</p>
+              <h3>
+                <span onClick={clickTitle}>
+                  <span onClick={() => {setIndex(index)}}>{title} </span>
+                </span> 
+                <span onClick={() => {
+                  let newGood = [...good];
+                  for(let i = 0; i < newGood.length; i++){
+                    if(i === index){
+                      newGood[i]+=1;
+                    }
+                  }
+                  setGood(newGood);}}>
+                    👍 {good[index]}
+                </span>
+              </h3>
+              <p>{dateContent[index]}</p>
               <hr/>
             </div>
           )
         })
       }
 
-      {/* 
-        html태그를 간편하게 한단어로 줄여서 쓸 수 있는 방법 : component문법 (HTML덩어리)
-        태그 이름은 내가 막 지어도 된다(나만의 단어로 만들면 된다.)
+      <div className="publish">
+        <input value={getTitle} onInput={inputTitle}/>
+        <button onClick={addContent}>게시물 추가</button>
+      </div>
 
-        ex) html에서는 이렇게 모달창을 띄우려고 하면 리액트에서 컴포넌트문법사용해서 만들면 밑에처럼 만들면 된다
-        <div className="modal">
-          <h2>제목</h2>
-          <p>날짜</p>
-          <p>상세내용</p>
-        </div>
-        
-        바로밑에는 만든 컴포넌트를 태그로 선언하는 방법
-        <Modal></Modal>이거나 <Modal/>로 해두됨
-
-        리액트를 쓰는 가장 중요한 이유!!!
-        컴포넌트를 이용해서 html을 축약해서 쓸 수 있기 때문에!
-        장점 : 컴포넌트안에 컴포넌트를 만들 수 있다(관리가 편해짐)
-        단점 : 
-        1. 컴포넌트를 많이 만들면 많이 만들수록 관리가 힘들어진다(적당히 만들자 >> 꼭 필요한것만)
-        2. state를 쓸 때 복잡해짐(데이터를 전달해줘야한다 >> props문법을 이용해야한다)
-
-        컴포넌트를 만드는 기준! (사실 마음에 드는 부분을 잘라서 컴포넌트를 만들어도 전혀 상관없음)
-        1. 반복적으로 출현하는 html덩어리들!
-        2. 자주 변경되는 html ui들(재렌더링이 많이 일어나는 ui를 따로 빼놓으면 그것만 재렌더링이 되기때문에 성능이 좋아짐)
-        3. 다른페이지 만들때도 컴포넌트로 만든다
-      */}
-
-      {/* h3을 클릭하면 Modal이 뜨게 하려면 여기서는 바로 If문 사용해서 사용이 가능하다 >> 중간에 넣을 수 있다
-        jsx에서 자바스크립트문을 사용하고 싶을때는 중괄호를 열고 사용해야한다
-        >> 즉, jsx중간에 변수를 넣고싶으면 {변수명} 이런식으로 쓰듯이 사용해야한다
-        근데 중괄호안에서는if문을 사용을 할 수 없다 으잉?!
-        여기서는 삼항연산자를 사용해야한다
-        조건식? true일 때 결과값 : false일 때 결과값
-      */}
-
-      {/* {
-        modal === true ? <Modal/> : null
-        // 아무것도 남기고싶지 않을때는 null을 이용해서 작성해야한다
-      } */}
-
-      {/* 버튼을 누르면 각각 다른 모달창이 뜨도록 */}
-      {/* <button onClick={ ()=> {changeIndex(0); changeModal(true)} }>버튼1</button>
-      <button onClick={ ()=> {changeIndex(1); changeModal(true)} }>버튼2</button>
-      <button onClick={ ()=> {changeIndex(2); changeModal(true)} }>버튼3</button> */}
-
-      {/* 숙제 : 버튼클릭시 모달창 만들어졌다가 사라짐 */}
-      <button onClick={clickTitle}>열고닫기</button>
-      
-      {
-        // porps로 자식에게 state를 전해주는법 >> key이름={전송할state}
-        modal === true ? <Modal contentTitle={contentTitle} titleIndex={titleIndex} /> : null
-      }
+      {modal === true ? <Modal title={titleContent} date={dateContent} contentI={contentIndex}/> : null }
 
     </div>
   );
 }
 
-/* 
-  위에서 이야기한 컴포넌트 만들기
-  function에 html을 담아서 치환을 하는 과정이다
-  원하는 태그이름 == 함수이름 / 즉, 함수이름이 곧 태그명이 되는것
-  그리고 위에와 똑같이 return안에 원하는 Html을 코딩해주면 된다
-  
-  컴포넌트 만들때 유의 사항
-  1. 함수의 이름(컴포넌트의 이름)은 무조건 대문자로 시작
-  2. return 소괄호안에 html을 담으면 된다 
-    >> 위에서 이야기한것과 같이 return안에서 처음div는 여러개가 올 수 없다. 즉, 처음 div는 크게 하나만 존재해야하고 그안에서는 여러개가능
-    >> 여기서 div를 굳이 하나로 쓰기 싫다 여러개 쓰고싶다 하면 <> <div></div><div></div> </> 이렇게 가능하다
-      >> 이말은 <> 와 </>사이에 여러개를 넣을 수 있다
-  
-  위에서 만든 function App도 일종의 컴포넌트 이다
-*/
-
-// 부모컨테이너에서 보낸 props값은 매개변수(data)로 한번에 묶여져서 넘어온다
 function Modal(data){
-  return (
+  return(
     <div className="modal">
-      {/* 받아온 매개변수(data) + .보낸값의 key이름 */}
-      <h2>제목 : {data.contentTitle[data.titleIndex]}</h2>
-      <p>날짜</p>
-      <p>상세내용</p>
+      <h2>제목 : {data.title[data.contentI]}</h2>
+      <p>날짜 : {data.date[data.contentI]}</p>
+      <p>상세내용 : </p>
     </div>
   )
 }
-
 
 export default App;
