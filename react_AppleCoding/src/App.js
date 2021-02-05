@@ -143,6 +143,10 @@ function App() { // 얘도 컴포넌트 이다
     }
   }
 
+  // ui를 각각 다르게 만들기
+  let [titleIndex, changeIndex] = useState(0);
+
+
   return (
     <div className="App">
       <div className="black-nav">
@@ -192,11 +196,11 @@ function App() { // 얘도 컴포넌트 이다
       {
         contentTitle.map(function(a, index){
           // a : array안에있던 하나하나의 데이터
-          // index : array안에 갯수만큼 돌리는 index
+          // index : array안에 갯수만큼 돌리는 index(반복문이 돌때마다 0,1,2되는 것)
           return (
             <div className="list" key={index}>
               {/* <h3 onClick={clickTitle}>{ contentTitle[index] }</h3>  >> 이렇게 사용해도되고 밑에꺼로 사용해도 된다*/}
-              <h3><span onClick={clickTitle}>{a}</span> <span onClick={appleGood}>🍎</span> { good } </h3> 
+              <h3 onClick={ () => {changeIndex(index);} }><span onClick={clickTitle}>{a}</span> <span onClick={appleGood}>🍎</span> { good } </h3> 
               <p>1월 21일 발행</p>
               <hr/>
             </div>
@@ -244,11 +248,17 @@ function App() { // 얘도 컴포넌트 이다
         // 아무것도 남기고싶지 않을때는 null을 이용해서 작성해야한다
       } */}
 
+      {/* 버튼을 누르면 각각 다른 모달창이 뜨도록 */}
+      {/* <button onClick={ ()=> {changeIndex(0); changeModal(true)} }>버튼1</button>
+      <button onClick={ ()=> {changeIndex(1); changeModal(true)} }>버튼2</button>
+      <button onClick={ ()=> {changeIndex(2); changeModal(true)} }>버튼3</button> */}
+
       {/* 숙제 : 버튼클릭시 모달창 만들어졌다가 사라짐 */}
-      <button onClick={clickTitle}>버튼</button>
+      <button onClick={clickTitle}>열고닫기</button>
       
       {
-        modal === true ? <Modal/> : null
+        // porps로 자식에게 state를 전해주는법 >> key이름={전송할state}
+        modal === true ? <Modal contentTitle={contentTitle} titleIndex={titleIndex} /> : null
       }
 
     </div>
@@ -270,10 +280,13 @@ function App() { // 얘도 컴포넌트 이다
   
   위에서 만든 function App도 일종의 컴포넌트 이다
 */
-function Modal(){
+
+// 부모컨테이너에서 보낸 props값은 매개변수(data)로 한번에 묶여져서 넘어온다
+function Modal(data){
   return (
     <div className="modal">
-      <h2>제목</h2>
+      {/* 받아온 매개변수(data) + .보낸값의 key이름 */}
+      <h2>제목 : {data.contentTitle[data.titleIndex]}</h2>
       <p>날짜</p>
       <p>상세내용</p>
     </div>
