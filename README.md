@@ -1,6 +1,6 @@
 # React수업
 
-AppleCoding(유료...강의...들을까...)과 코지코더 React 기초 익히기 <br>
+AppleCoding(유료강의 시작)과 코지코더 React 기초 익히기 <br>
 
 ## :file_folder: Folder Name
 > blog >> 블로그만들기<br>
@@ -24,3 +24,4 @@ AppleCoding(유료...강의...들을까...)과 코지코더 React 기초 익히�
 > :heart: 01월 25일 코지코더 React 기초 익히기 13강<br>
 > :broken_heart: 01월 26일 코지코더 React 기초 익히기 15강<br>
 > :heart: 01월 29일 코지코더 현재 올라온 React 기초 익히기 완강 >> 더 올라올 예정<br>
+> :green_heart: 02월 04일 appleCoding React 다시시작 9강<br>
