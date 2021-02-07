@@ -26,3 +26,5 @@ AppleCoding(유료강의 시작)과 코지코더 React 기초 익히기 <br>
 > :heart: 01월 29일 코지코더 현재 올라온 React 기초 익히기 완강 >> 더 올라올 예정<br>
 > :green_heart: 02월 04일 AppleCoding React 다시시작 9강<br>
 > :heart: 02월 05일 AppleCoding React Part1 완료<br>
+> :heart: 02월 06일 AppleCoding React Part2 시작(part2 1 ~ 4강)<br>
+> :heart: 02월 06일 AppleCoding React Part2 시작(part2 5 ~ 8강)<br>
